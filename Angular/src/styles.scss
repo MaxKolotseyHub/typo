@@ -1,1 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #273746;
+}
+
+.current-letter{
+    background-color: white;
+    padding: 1px 5px;
+    margin: 0 2.5px;
+    color: black;
+    animation: blinking 1s;
+    animation-iteration-count: infinite;
+}
+
+.current-letter-error{
+    background-color: #C0392B;
+    padding: 1px 5px;
+    margin: 0 2.5px;
+    color: white;
+    animation: blinking-error 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blinking {
+
+    50%{
+        background-color: #212F3C;
+        color: whitesmoke;
+    }
+
+    100%{
+        background-color: white;
+        color: black;
+    }
+    
+}
+
+@keyframes blinking-error {
+
+    50%{
+        background-color: #C0392B;
+        color: whitesmoke;
+    }
+
+    100%{
+        background-color: whitesmoke;
+        color: black;
+    }
+    
+}

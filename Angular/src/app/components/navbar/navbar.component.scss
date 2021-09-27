@@ -1,0 +1,43 @@
+.navbar{
+    width: 100%;
+    margin: 0;
+    background-color: #17202A;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: #17202A 0rem .2rem;
+}
+
+.navbar > .logo{
+    font-family: 'Stick No Bills', sans-serif;
+    color: white;
+    font-size: 38px;
+    padding: 1rem 3rem;
+    transition: all 0.3s ease;
+}
+
+.navbar > .logo:hover{
+    color: gainsboro;
+}
+
+ul{
+    margin-right: 2rem;
+    text-align: center;
+    justify-content: center;
+    padding-top: .5rem;
+}
+
+li{
+    display: inline;
+    font-size: 20px;
+    font-weight: 300;
+    font-family: 'Gemunu Libre', sans-serif;
+    list-style-type: none;
+    margin: 1rem;
+}
+
+li > a{
+    text-decoration: none;
+    color: whitesmoke;
+}

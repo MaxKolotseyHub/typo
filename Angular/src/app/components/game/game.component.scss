@@ -1,0 +1,41 @@
+.playground{
+    margin: 2.5rem 15rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.errors{
+    font-family: 'Gemunu Libre', sans-serif;
+    font-size: 26px;
+    color: #C0392B;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin: 1rem;
+}
+
+.glow{
+    animation: error-increment .2s;
+}
+
+@keyframes error-increment {
+    50%{
+        text-shadow: #C0392B 1px 0 10px;
+    }
+}
+
+.card-container{
+    background-color: #17202A;
+    padding: 1.5rem;
+}
+
+.card-container > p{
+    font-family: 'Gemunu Libre', sans-serif;
+    color: whitesmoke;
+    font-size: 26px;
+}
+
+input{
+    visibility: hidden;
+}
