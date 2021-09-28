@@ -1,9 +1,25 @@
 <div class="playground">
-    <div class="errors" id="error"> 
-        ERRORS: {{errors}}
+    <div class="" *ngIf="!finished && !gameover ">
+        <div class="errors" id="error">
+            ERRORS: {{gameService.errors}}
+        </div>
+        <div class="card-container">
+            <p [innerHtml]="gameService.styledText"></p>
+        </div>
     </div>
-    <div class="card-container">
-        <p [innerHtml]="styledText"></p>
+    <div class="container" *ngIf="finished">
+        <div class="results">
+            <div class="speed">Speed: {{gameService.speed}}</div>
+            <div class="errors">Errors: {{gameService.errors}}</div>
+        </div>
+        <a class="text" (click)="nextArticle()">Next article</a>
+    </div>
+
+
+    <div class="container" *ngIf="gameover">
+        <div class="results">
+            <div class="speed">All articles in this game are passed!</div>
+        </div>
+        <a class="text" routerLink="/games">Go to all texts</a>
     </div>
 </div>
-

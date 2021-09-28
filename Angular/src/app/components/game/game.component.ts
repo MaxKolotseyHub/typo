@@ -1,4 +1,4 @@
-import { style, trigger } from '@angular/animations';
+// import { style, trigger } from '@angular/animations';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
@@ -8,8 +8,16 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { GameService } from 'src/app/services/game.service';
+import { ActivatedRoute } from '@angular/router';
+import { TextsService } from 'src/app/services/texts.service';
+import { TextItem } from 'src/app/models/textItem';
+import { Location } from '@angular/common';
+import {  } from 'rxjs'
+import { GamesListComponent } from '../games-list/games-list.component';
 
 @Component({
+  providers: [GameService],
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
@@ -23,75 +31,41 @@ import {
 })
 export class GameComponent implements OnInit {
 
-  text = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, facere non nobis alias atque doloribus ipsum saepe explicabo quos aut praesentium rem, illo laborum quia deleniti! Architecto, aliquid debitis! Cumque.';
-  splitted: string[];
-  currentLetter = {
-    id: 0,
-    letter: ""
-  };
-  count = 0;
-  tmp = "";
-  show = "";
-  errors = 0;
-  currentLetterStyle = `<span class="current-letter">${this.currentLetter}</span>`;
-  currentLetterErrorStyle = `<span class="current-letter-error">${this.currentLetter}</span>`;
-  styledText: SafeHtml | undefined;
-  constructor(private sanitizer: DomSanitizer) {
-    this.splitted = this.text.split('');
-    this.highlightCurrentLetter(0);
+  // text = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, facere non nobis alias atque doloribus ipsum saepe explicabo quos aut praesentium rem, illo laborum quia deleniti! Architecto, aliquid debitis! Cumque.';
+  id: number | undefined;
+  text: TextItem;
+  finished = false;
+  currentArticleId: number;
+  gameover = false;
+  constructor(
+    public gameService: GameService, 
+    private activatedRoute: ActivatedRoute,
+    private locaton: Location,
+    private textService: TextsService) {
+      this.gameService.GameFinished$.subscribe( finished =>{
+        this.finished = finished;
+      });
+
+      this.gameService.TextItemFinished$.subscribe( finished =>{
+        this.gameover = finished;
+      })
   }
 
   ngOnInit(): void {
-    this.refreshText();
+    this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.text = this.textService.getTextItemById(this.id);
+    this.gameService.setTextItem(this.text);
+    this.gameService.onGameStart();
   }
 
   @HostListener('document:keyup', ['$event'])
   onKeyUp(ev: KeyboardEvent) {
-    if (ev.key === 'Shift') {
-      return;
-    }
-    if (this.currentLetter.letter === ev.key) {
-      console.log(`The user just pressed ${ev.key}!`);
-      this.splitted[this.count] = this.tmp;
-      this.count++;
-      this.highlightCurrentLetter(this.count);
-    } else {
-      this.errors++;
-      this.highlightCurrentLetter(this.count, true);
-      document.getElementById('error').classList.add('glow');
-      setTimeout(() => {
-        document.getElementById('error').classList.remove('glow');
-      }, 200);
-    }
+    this.gameService.onKeyUp(ev);
   }
 
-  private highlightCurrentLetter(id: number, error: boolean = false) {
-    this.currentLetter.id = this.count;
-    if (error)
-      this.currentLetter.letter = this.tmp;
-    else{
-      this.currentLetter.letter = this.splitted[id];
-      this.tmp = this.splitted[id];
-    }
-    if (error)
-      this.splitted[id] = `<span class="current-letter-error">${this.currentLetter.letter}</span>`;
-    else
-      this.splitted[id] = `<span class="current-letter">${this.currentLetter.letter}</span>`;
-    this.refreshText();
-  }
-
-  private refreshText() {
-    let a = this.splitted.join('_');
-    a = a.replace(/_/g, '');
-    console.log(a);
-    this.styledText = this.sanitizer.bypassSecurityTrustHtml(a);
+  nextArticle(){
+    this.gameService.markArticleAsDone();
+    this.gameService.onGameStart();
+    this.finished = false;
   }
 }
-
-
-// animate("5s", keyframes([
-//   style({ backgroundColor: "red", offset: 0 }),
-//   style({ backgroundColor: "blue", offset: 0.2 }),
-//   style({ backgroundColor: "orange", offset: 0.3 }),
-//   style({ backgroundColor: "black", offset: 1 })
-// ]))

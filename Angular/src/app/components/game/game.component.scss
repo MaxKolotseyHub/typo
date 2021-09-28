@@ -11,7 +11,7 @@
     font-weight: 600;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     margin: 1rem;
 }
 
@@ -38,4 +38,33 @@
 
 input{
     visibility: hidden;
+}
+
+.results{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.speed{
+    font-family: 'Gemunu Libre', sans-serif;
+    font-size: 26px;
+    color: whitesmoke;
+    margin: 1rem;
+}
+
+.text{
+    font-family: 'Gemunu Libre', sans-serif;
+    font-size: 22px;
+    color: whitesmoke;
+    margin: 1rem auto;
+    text-decoration: none;
+    text-transform: uppercase;
+    
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
 }
