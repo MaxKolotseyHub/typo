@@ -1,7 +1,7 @@
 <div class="playground">
     <div class="" *ngIf="!finished && !gameover ">
         <div class="errors" id="error">
-            ERRORS: {{gameService.errors}}
+            ERRORS COUNT: {{gameService.errors}}
         </div>
         <div class="card-container">
             <p [innerHtml]="gameService.styledText"></p>
